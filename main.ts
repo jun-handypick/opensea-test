@@ -4,12 +4,8 @@ import Caver from "caver-js";
 import AlienKIP17Token_ABI from "./AlienKIP17Token_ABI";
 import AlienKIP17Token_ADDR from "./AlienKIP17Token_ADDR";
 
-const PORT = process.env.PORT || 5000;
-
-const app = express()
-    .set("port", PORT)
-    .set("views", path.join(__dirname, "views"))
-    .set("view engine", "ejs");
+const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -29,8 +25,8 @@ app.get("/token/:token_id", (req, res) => {
     console.log(data);
 });
 
-app.listen(app.get("port"), () => {
-    console.log("Node app is running on port", app.get("port"));
+app.listen(port, () => {
+    console.log("Node app is running on port", port);
 
     // 이벤트를 확인하기 위해서는 웹소켓 provider를 제공해야 한다
     const caver = new Caver("wss://api.baobab.klaytn.net:8652/");
