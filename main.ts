@@ -4,7 +4,7 @@ import Caver from "caver-js";
 import AlienKIP17Token_ABI from "./AlienKIP17Token_ABI";
 import AlienKIP17Token_ADDR from "./AlienKIP17Token_ADDR";
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const app = express()
     .set("port", PORT)
@@ -12,6 +12,8 @@ const app = express()
     .set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => res.send("Test open-sea"));
 
 app.get("/token/:token_id", (req, res) => {
     const tokenId = parseInt(req.params.token_id).toString();
