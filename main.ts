@@ -15,6 +15,30 @@ app.get("/", (req, res) => res.send("Test open-sea"));
 app.get("/token/:token_id", (req, res) => {
     const tokenId = parseInt(req.params.token_id).toString();
 
+    const imageId = 91;
+
+    // egg 상태가 아니라면 아래와 같이
+    const level = 1;
+    const hashPower = 22;
+    fs.writeFileSync(
+        `./metadatas/metadata_${tokenId}.json`,
+        JSON.stringify({
+            name: tokenId,
+            description: "kop alien token",
+            image: `https://opensea--test.herokuapp.com/token/${imageId}`,
+            attributes: [
+                {
+                    trait_type: "Level",
+                    value: level,
+                },
+                {
+                    trait_type: "Hash Power",
+                    value: hashPower,
+                },
+            ],
+        })
+    );
+
     const jsonFile = fs.readFileSync(`./metadatas/metadata_${tokenId}.json`, "utf-8");
 
     res.send(jsonFile);
@@ -23,7 +47,7 @@ app.get("/token/:token_id", (req, res) => {
 
 app.get("/images/:image_id", (req, res) => {
     const imageId = parseInt(req.params.image_id).toString();
-    res.sendFile(path.join(__dirname, `./Alien${imageId}.png`));
+    res.sendFile(path.join(__dirname, `./images/Alien${imageId}.png`));
 });
 
 app.listen(port, () => {
@@ -58,7 +82,7 @@ app.listen(port, () => {
                     JSON.stringify({
                         name: tokenId,
                         description: "kop alien token",
-                        image: `https://opensea--test.herokuapp.com/token/${imageId}`,
+                        image: `https://opensea--test.herokuapp.com/images/${imageId}`,
                         attributes: [
                             {
                                 trait_type: "Level",
