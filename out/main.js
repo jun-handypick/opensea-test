@@ -19,7 +19,7 @@ app.get("/token/:token_id", function (req, res) {
     var filePath = path_1.default.join(__dirname, "./metadatas/metadata_".concat(tokenId, ".json"));
     if (fs_1.default.existsSync(filePath)) {
         var jsonFile = fs_1.default.readFileSync(filePath, "utf-8");
-        res.send(jsonFile);
+        res.json(jsonFile);
         console.log(jsonFile);
     }
     else {
