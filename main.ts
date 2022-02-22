@@ -19,7 +19,8 @@ app.get("/token/:token_id", (req, res) => {
 
     if (fs.existsSync(filePath)) {
         const jsonFile = fs.readFileSync(filePath, "utf-8");
-        res.json(jsonFile);
+        res.setHeader("Content-Type", "application/json");
+        res.send(jsonFile);
         console.log(jsonFile);
     } else {
         res.send(`not found metadata. token id: ${tokenId}}`);
