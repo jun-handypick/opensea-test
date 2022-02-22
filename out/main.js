@@ -16,16 +16,29 @@ app.get("/", function (req, res) { return res.send("Test open-sea"); });
 app.get("/token/:token_id", function (req, res) {
     console.log("/token/:token_id");
     var tokenId = parseInt(req.params.token_id).toString();
-    var jsonFile = fs_1.default.readFileSync("./metadatas/metadata_".concat(tokenId, ".json"), "utf-8");
-    res.send(jsonFile);
-    console.log(jsonFile);
+    var filePath = path_1.default.join(__dirname, "./metadatas/metadata_".concat(tokenId, ".json"));
+    if (fs_1.default.existsSync(filePath)) {
+        var jsonFile = fs_1.default.readFileSync(filePath, "utf-8");
+        res.send(jsonFile);
+        console.log(jsonFile);
+    }
+    else {
+        res.send("not found metadata. token id: ".concat(tokenId, "}"));
+        console.log("not found metadata. token id: ".concat(tokenId, "}"));
+    }
 });
 app.get("/images/:image_id", function (req, res) {
     console.log("/images/:image_id");
     var imageId = parseInt(req.params.image_id).toString();
     var filePath = path_1.default.join(__dirname, "./images/Alien".concat(imageId, ".png"));
-    console.log("image path: ".concat(filePath));
-    res.sendFile(filePath);
+    if (fs_1.default.existsSync(filePath)) {
+        res.sendFile(filePath);
+        console.log("image path: ".concat(filePath));
+    }
+    else {
+        res.send("not found image. image id: ".concat(imageId, "}"));
+        console.log("not found image. image id: ".concat(imageId, "}"));
+    }
 });
 app.listen(port, function () {
     console.log("Node app is running on port", port);

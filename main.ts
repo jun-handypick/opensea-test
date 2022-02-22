@@ -15,18 +15,30 @@ app.get("/", (req, res) => res.send("Test open-sea"));
 app.get("/token/:token_id", (req, res) => {
     console.log("/token/:token_id");
     const tokenId = parseInt(req.params.token_id).toString();
-    const jsonFile = fs.readFileSync(`./metadatas/metadata_${tokenId}.json`, "utf-8");
+    const filePath = path.join(__dirname, `./metadatas/metadata_${tokenId}.json`);
 
-    res.send(jsonFile);
-    console.log(jsonFile);
+    if (fs.existsSync(filePath)) {
+        const jsonFile = fs.readFileSync(filePath, "utf-8");
+        res.send(jsonFile);
+        console.log(jsonFile);
+    } else {
+        res.send(`not found metadata. token id: ${tokenId}}`);
+        console.log(`not found metadata. token id: ${tokenId}}`);
+    }
 });
 
 app.get("/images/:image_id", (req, res) => {
     console.log("/images/:image_id");
     const imageId = parseInt(req.params.image_id).toString();
     const filePath = path.join(__dirname, `./images/Alien${imageId}.png`);
-    console.log(`image path: ${filePath}`);
-    res.sendFile(filePath);
+
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+        console.log(`image path: ${filePath}`);
+    } else {
+        res.send(`not found image. image id: ${imageId}}`);
+        console.log(`not found image. image id: ${imageId}}`);
+    }
 });
 
 app.listen(port, () => {
