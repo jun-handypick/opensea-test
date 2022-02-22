@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => res.send("Test open-sea"));
 
 app.get("/token/:token_id", (req, res) => {
+    console.log("/token/:token_id");
     const tokenId = parseInt(req.params.token_id).toString();
     const jsonFile = fs.readFileSync(`./metadatas/metadata_${tokenId}.json`, "utf-8");
 
@@ -21,8 +22,11 @@ app.get("/token/:token_id", (req, res) => {
 });
 
 app.get("/images/:image_id", (req, res) => {
+    console.log("/images/:image_id");
     const imageId = parseInt(req.params.image_id).toString();
-    res.sendFile(path.join(__dirname, `./images/Alien${imageId}.png`));
+    const filePath = path.join(__dirname, `./images/Alien${imageId}.png`);
+    console.log(`image path: ${filePath}`);
+    res.sendFile(filePath);
 });
 
 app.listen(port, () => {
@@ -52,8 +56,10 @@ app.listen(port, () => {
                 // egg 상태가 아니라면 아래와 같이
                 const level = 1;
                 const hashPower = 22;
+                const filePath = path.join(__dirname, `./metadatas/metadata_${tokenId}.json`);
+                console.log(filePath);
                 fs.writeFile(
-                    `./metadatas/metadata_${tokenId}.json`,
+                    filePath,
                     JSON.stringify({
                         name: tokenId,
                         description: "kop alien token",

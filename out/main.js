@@ -14,14 +14,18 @@ var port = process.env.PORT || 5000;
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.get("/", function (req, res) { return res.send("Test open-sea"); });
 app.get("/token/:token_id", function (req, res) {
+    console.log("/token/:token_id");
     var tokenId = parseInt(req.params.token_id).toString();
     var jsonFile = fs_1.default.readFileSync("./metadatas/metadata_".concat(tokenId, ".json"), "utf-8");
     res.send(jsonFile);
     console.log(jsonFile);
 });
 app.get("/images/:image_id", function (req, res) {
+    console.log("/images/:image_id");
     var imageId = parseInt(req.params.image_id).toString();
-    res.sendFile(path_1.default.join(__dirname, "./images/Alien".concat(imageId, ".png")));
+    var filePath = path_1.default.join(__dirname, "./images/Alien".concat(imageId, ".png"));
+    console.log("image path: ".concat(filePath));
+    res.sendFile(filePath);
 });
 app.listen(port, function () {
     console.log("Node app is running on port", port);
@@ -46,7 +50,9 @@ app.listen(port, function () {
                 // egg 상태가 아니라면 아래와 같이
                 var level = 1;
                 var hashPower = 22;
-                fs_1.default.writeFile("./metadatas/metadata_".concat(tokenId, ".json"), JSON.stringify({
+                var filePath = path_1.default.join(__dirname, "./metadatas/metadata_".concat(tokenId, ".json"));
+                console.log(filePath);
+                fs_1.default.writeFile(filePath, JSON.stringify({
                     name: tokenId,
                     description: "kop alien token",
                     image: "https://opensea--test.herokuapp.com/images/Alien".concat(imageId, ".png"),
