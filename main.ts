@@ -70,22 +70,77 @@ app.listen(port, () => {
                 const hashPower = 22;
                 const filePath = path.join(__dirname, `./metadatas/metadata_${tokenId}.json`);
                 console.log(filePath);
+                // fs.writeFile(
+                //     filePath,
+                //     JSON.stringify({
+                //         name: tokenId,
+                //         description: "kop alien token",
+                //         image: `https://opensea--test.herokuapp.com/images/${imageId}`,
+                //         attributes: [
+                //             {
+                //                 trait_type: "Level",
+                //                 value: level,
+                //             },
+                //             {
+                //                 trait_type: "Hash Power",
+                //                 value: hashPower,
+                //             },
+                //         ],
+                //     }),
+                //     (err) => {
+                //         if (err) {
+                //             console.error(err);
+                //         }
+                //     }
+                // );
                 fs.writeFile(
                     filePath,
                     JSON.stringify({
-                        name: tokenId,
-                        description: "kop alien token",
-                        image: `https://opensea--test.herokuapp.com/images/Alien${imageId}.png`,
                         attributes: [
                             {
-                                trait_type: "Level",
-                                value: level,
+                                trait_type: "base",
+                                value: "narwhal",
                             },
                             {
-                                trait_type: "Hash Power",
-                                value: hashPower,
+                                trait_type: "eyes",
+                                value: "sleepy",
+                            },
+                            {
+                                trait_type: "mouth",
+                                value: "cute",
+                            },
+                            {
+                                trait_type: "level",
+                                value: 4,
+                            },
+                            {
+                                trait_type: "stamina",
+                                value: 90.2,
+                            },
+                            {
+                                trait_type: "personality",
+                                value: "boring",
+                            },
+                            {
+                                display_type: "boost_number",
+                                trait_type: "aqua_power",
+                                value: 10,
+                            },
+                            {
+                                display_type: "boost_percentage",
+                                trait_type: "stamina_increase",
+                                value: 5,
+                            },
+                            {
+                                display_type: "number",
+                                trait_type: "generation",
+                                value: 1,
                             },
                         ],
+                        description: "Friendly OpenSea Creature that enjoys long swims in the ocean.",
+                        external_url: "https://example.com/?token_id=3",
+                        image: "https://storage.googleapis.com/opensea-prod.appspot.com/creature/3.png",
+                        name: "Dave Starbelly",
                     }),
                     (err) => {
                         if (err) {
